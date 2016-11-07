@@ -8,6 +8,7 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,22 +53,28 @@ public class GeoFenceService extends IntentService {
 
 		for (Geofence geofence : listOfGeoFences) {
 			Log.d(TAG, "Geofence ID: " + geofence.getRequestId());  //this is configured in MainActivity
+
+			int transition = geofencingEvent.getGeofenceTransition();
+			String transitionString = "";
+			if (transition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+				transitionString = "entered";
+			} else if (transition == Geofence.GEOFENCE_TRANSITION_DWELL) {
+				transitionString = "is dwelling in";
+			} else if (transition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+				transitionString = "exited";
+			}
+
+			Date currentTime = new Date();
+			String eventMessage = "Device " + transitionString + " GeoFence with tag " + geofence.getRequestId() + " at " + currentTime ;
+			// e.g. "Device entered GeoFence with tag MCTC_Geofence at November 8 2016 15.12:12..."
+
+			Firebase firebase = new Firebase();
+			firebase.addGeoFenceEvent(eventMessage);   //TODO an object to store more detail about event
+
 		}
 
 
-		//You'd need some more logic here to do whatever you need to do when a particular GeoFence is triggered.
-
-		if (geofencingEvent.getGeofenceTransition() == Geofence.GEOFENCE_TRANSITION_ENTER) {
-
-			Log.d(TAG, "Device entered a GeoFence");
-
-		}
-
-		if (geofencingEvent.getGeofenceTransition() == Geofence.GEOFENCE_TRANSITION_EXIT) {
-
-			Log.d(TAG, "Device exited a GeoFence");
-
-		}
+		//You'd probably need some more logic here to do whatever you need to do when a particular GeoFence is triggered.
 
 
 	}

@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -27,8 +28,16 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
 
-    //Google play services. Required for GeoFencing service
-    compile 'com.google.android.gms:play-services:9.0.0'
+    //Google play services. Required for GeoFencing service. You may need to download a new image for an emulator to get this latest version.
+    compile 'com.google.android.gms:play-services:9.8.0'
 
+
+    //For Firebase
+    compile 'com.google.firebase:firebase-database:9.8.0'
+
+    //https://developer.android.com/studio/build/multidex.html
+    compile 'com.android.support:multidex:1.0.0'
 
 }
+
+apply plugin: 'com.google.gms.google-services'

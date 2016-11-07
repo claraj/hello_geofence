@@ -19,12 +19,16 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.jar.*;
 
 /* Minimal working GeoFence app */
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, ResultCallback<Status> {
+public class MainActivity extends AppCompatActivity implements
+		GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, ResultCallback<Status>,
+		Firebase.GeoFenceEventCallback {
 
 	private static final String TAG = "HELLO GEOFENCE";
 	GoogleApiClient mGoogleApiClient;
@@ -47,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 					.addApi(LocationServices.API)
 					.build();
 		}
+
+		//Listen to Firebsase database, where GeoFence events are stored
+		Firebase firebase = new Firebase();
+		firebase.beNotifiedOfGeoFenceEvents(this);
 	}
 
 
@@ -85,12 +93,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
 	private void configureGeoFence() {
 		//Create a new GeoFence. Configure the GeoFence using a Builder. See documentation for setting options
+		//Can create many GeoFences, differentiate by the requestId String. The lat+lon could be replaced with user input.
 		Geofence geoFence = new Geofence.Builder()
 				.setRequestId("mctc_geofence")    //identifies your GeoFence, put a unique String here
 				.setCircularRegion(
-						44.973098,   		//latitude of MCTC
-						-93.282692,         //longitude of MCTC
-						100                 //radius of circle, in meters. Documentation recommends 100 meters as a minimum.
+						44.973098,    	// latitude of MCTC
+						-93.282692,     // longitude of MCTC
+						1000                 //radius of circle, in meters. Documentation recommends 100 meters as a minimum.
 				)
 				.setExpirationDuration(60 * 60 * 1000)      //Valid for an hour
 				.setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)  // Want to be notified when user enters and exits the GeoFence
@@ -175,4 +184,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 	}
 
 
+	//Callback from Firebase. In real app, you probably just want to get the most recent, or you'd want to filter in some way.
+	@Override
+	public void newGeoFenceEventMessages(ArrayList<String> messages) {
+
+		for (String message : messages) {
+
+			//real app - do something more useful
+			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+		}
+
+	}
 }
