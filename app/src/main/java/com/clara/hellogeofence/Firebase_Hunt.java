@@ -25,7 +25,7 @@ public class Firebase_Hunt {
 
 	//private HuntClass mHuntClass;
 
-	private static final String Scavenger_Lists_Key = "scavenger_hunts_345354";
+	private static final String Scavenger_Lists_Key = "scavenger_hunts";
 	private static final String LIST_TAG = "ckascbk";
 
 
@@ -87,11 +87,11 @@ public class Firebase_Hunt {
 		hunt1.setPlaces_to_find(items);
 		hunt1.setName("Hunt 1");
 
-
 		ScavengerHunt hunt2 = new ScavengerHunt();
 		ArrayList items2 = new ArrayList();
-		items.add(item3);
-		items.add(item4);
+		hunt2.setName("Hunt 2");
+		items2.add(item3);
+		items2.add(item4);
 		hunt2.setPlaces_to_find(items2);
 
 		Log.d(TAG, "Created test scavenger hunts");
