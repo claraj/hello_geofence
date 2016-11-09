@@ -29,11 +29,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     //Google play services. Required for GeoFencing service. You may need to download a new image for an emulator to get this latest version.
-    compile 'com.google.android.gms:play-services:9.8.0'
+    compile 'com.google.android.gms:play-services:9.6.0'
 
 
     //For Firebase
-    compile 'com.google.firebase:firebase-database:9.8.0'
+    compile 'com.google.firebase:firebase-database:9.6.0'
 
     //https://developer.android.com/studio/build/multidex.html
     compile 'com.android.support:multidex:1.0.0'

@@ -53,8 +53,19 @@ public class MainActivity extends AppCompatActivity implements
 		}
 
 		//Listen to Firebsase database, where GeoFence events are stored
-		Firebase firebase = new Firebase();
-		firebase.beNotifiedOfGeoFenceEvents(this);
+//		Firebase firebase = new Firebase();
+//		firebase.beNotifiedOfGeoFenceEvents(this);
+
+
+		Firebase_Hunt fb_hunt = new Firebase_Hunt();
+		fb_hunt.addTestHuntData();
+
+		fb_hunt.getAllScavengerLists();
+
+
+
+
+
 	}
 
 
